@@ -19,7 +19,7 @@ app.use(morgan('dev'));
 
 // define cors
 app.use(cors({
-    origin: ['https://pokemon-frontend-plcp.onrender.com/','http://localhost:8000'],
+    origin: ['https://pokemon-frontend-plcp.onrender.com','http://localhost:8000'],
     methods: ['GET', 'POST', 'DELETE', 'PUT']
 }));
 
@@ -35,6 +35,11 @@ if (process.env.NODE_ENV === 'development')
     })
 }
 ;
+// capture the origin
+app.use((req, res, next) => {
+    console.log('Request Origin:', req.headers.origin);
+    next();
+});
 
 //error handling
 app.use((err, req, res, next)=>{
