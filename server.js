@@ -28,11 +28,8 @@ app.use(cors({
 app.use('/pokemon', pokemonRoutes);
 
 // Serve index.html for frontend routes (SPA fallback)
-if (process.env.NODE_ENV === 'production') 
-    {app.get('*', (req, res) => {
-    res.redirect('https://pokemon-frontend-plcp.onrender.com/')
-})} 
-else {
+if (process.env.NODE_ENV === 'development') 
+    {
     app.get('/', (req,res) => {
         res.send('Welcome to Pokemon Dev Backend API!')
     })
