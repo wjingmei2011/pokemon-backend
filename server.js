@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const pokemonRoutes = require('./routes/pokemonRoutes');  
 const dotenv = require('dotenv');
 dotenv.config();
+const cors = require('cors');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -16,7 +17,11 @@ console.log('Current NODE_ENV is: ', process.env.NODE_ENV)
 app.use(express.json());
 app.use(morgan('dev'));
 
-// Serve static files (no need for seperate deployment)
+// define cors
+app.use(cors({
+    origin: 'https://pokemon-frontend-plcp.onrender.com/',
+    methods: ['GET', 'POST', 'DELETE', 'PUT']
+}));
 
 
 // Define API routes
