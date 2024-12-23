@@ -19,7 +19,7 @@ app.use(morgan('dev'));
 
 // define cors
 app.use(cors({
-    origin: 'https://pokemon-frontend-plcp.onrender.com/',
+    origin: ['https://pokemon-frontend-plcp.onrender.com/','http://localhost:8000'],
     methods: ['GET', 'POST', 'DELETE', 'PUT']
 }));
 
