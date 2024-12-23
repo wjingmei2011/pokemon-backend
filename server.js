@@ -4,26 +4,35 @@ const express = require('express');
 const path = require('path');
 const morgan = require('morgan');
 const pokemonRoutes = require('./routes/pokemonRoutes');  
+const dotenv = require('dotenv');
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+console.log('Current NODE_ENV is: ', process.env.NODE_ENV)
 
 // Middleware
 app.use(express.json());
 app.use(morgan('dev'));
 
-// Serve static files
-app.use(express.static(path.join(__dirname, '../dist')));
-app.use(express.static(path.join(__dirname, 'views/public')));
+// Serve static files (no need for seperate deployment)
+
 
 // Define API routes
 app.use('/pokemon', pokemonRoutes);
 
 // Serve index.html for frontend routes (SPA fallback)
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../dist/index.html'));
-});
+if (process.env.NODE_ENV === 'production') 
+    {app.get('*', (req, res) => {
+    res.redirect('https://pokemon-frontend-plcp.onrender.com/')
+})} 
+else {
+    app.get('/', (req,res) => {
+        res.send('Welcome to Pokemon Dev Backend API!')
+    })
+}
+;
 
 //error handling
 app.use((err, req, res, next)=>{
