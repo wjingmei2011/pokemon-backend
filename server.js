@@ -28,16 +28,13 @@ app.use(cors({
 app.use('/pokemon', pokemonRoutes);
 
 // Serve index.html for frontend routes (SPA fallback)
-if (process.env.NODE_ENV === 'development') 
-    {
-    app.get('/', (req,res) => {
+app.get('/', (req,res) => {
         res.send('Welcome to Pokemon Dev Backend API!')
     })
-}
-;
+    ;
 // capture the origin
 app.use((req, res, next) => {
-    console.log('Request Origin:', req.headers.origin);
+    console.log('Request Origin is:', req.headers.origin);
     next();
 });
 
