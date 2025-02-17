@@ -52,15 +52,15 @@ pokemonModel.fetchPokemon = async (username, month, color) => {
     });
 
     const generatedResponse = groqResponse.choices[0]?.message?.content || `Looks like the stars are still aligning for your match with ${pokemon.name}! With its incredible abilities of ${pokemon.abilities.join(', ')}, this ${pokemon.type}-type Pokémon is ready to embark on adventures with you. Stay excited, because 2025 promises to be a year full of surprises and epic moments!`;
-    console.log(generatedResponse);
-
+    console.log("Trying to insert:", username, color, pokemon.name, pokemon.image, pokemon.type, JSON.stringify(pokemon.abilities));
+    
     await pool.query(
         `INSERT INTO user_pokemon (user_name, favorite_color, pokemon_name, image, type, abilities)
         VALUES ($1, $2, $3, $4, $5, $6)`,
         [username, color, pokemon.name, pokemon.image, pokemon.type, JSON.stringify(pokemon.abilities)]
     );
-    console.log(pokemon.abilities);
     
+
     return {...pokemon, description: generatedResponse};
 
     } catch (err) {
@@ -77,5 +77,3 @@ pokemonModel.fetchAllPokemons = async () => {
         console.error(`Error in fetchAllPokemons function: ${err.message}`);
     }
 };
-
-
